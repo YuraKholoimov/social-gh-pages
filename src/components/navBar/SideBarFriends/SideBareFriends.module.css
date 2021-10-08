@@ -1,0 +1,16 @@
+.sideBareFriends {
+  display: grid;
+  justify-content: center;
+
+  border: purple 1px solid;
+  border-radius: 15px;
+  height: 45vh;
+
+  margin-top: 100px;
+
+  text-align: center;
+}
+
+.dialogItemElements {
+
+}

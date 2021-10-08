@@ -1,0 +1,30 @@
+.app-wrapper {
+  box-shadow: 15px 0 30px 25px black;
+  margin: 0 auto;
+  max-width: 70em;
+  display: grid;
+  grid-template-rows: 180px 1fr;
+  grid-template-columns: 2fr 10fr;
+
+  grid-template-areas: 
+  "h h"
+  "n c";
+
+} 
+
+.parallax {
+  background-image: url(https://www.pixel-creation.com/wp-content/uploads/nice-cartoons-desktop-backgrounds-cartoon-network-full-hd-990827.jpg);
+  height: 100vh;
+  overflow-x: hidden;
+}
+
+.app-wrapper-content {
+  position: relative;
+  grid-area: c;
+  background-color:chocolate;
+  min-height: 100em;
+}
+
+
+
+

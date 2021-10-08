@@ -1,0 +1,32 @@
+.formControl.error {
+    display: flex; 
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.formControl.error textarea {
+    border: solid red 10px;
+}
+.errorText {
+    display: flex;
+    justify-content: center;
+    height: 75px;
+    /* margin: 15px; */
+    padding: 20px;
+}
+.formControl span {
+    /* margin: 15px; */
+    padding: 20px;
+    color:red;
+    font-size: 34px;
+    font-weight: 900;
+    /* text-shadow: 1px 1px 1px black; */
+    background: #000;
+    border-radius: 15px;
+}
+.formError {
+    border-radius: 2px solid red;
+    padding: 5px;
+    color: rgb(123, 255, 0);
+    font-size: 34px;
+}

@@ -1,0 +1,39 @@
+.header img{
+    box-shadow: 0 0 20px 10px rgb(18, 156, 149);
+    margin: 3em;
+    height: 60px;
+    width: 130px;
+}
+.header {
+ 
+    background-image: url(https://static.miraheze.org/closinglogosgroupwiki/b/bf/Cartoon_Network_%282010%29.png);
+    background-position: 50%;
+    grid-area: h;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+}
+
+.loginBlock {
+    width:450px;
+    height: 150px;
+    /* align-self: flex-end; */
+    /* text-align: end; */
+    display: flex;
+    justify-content: flex-end;
+    align-self: end;
+    color:rgb(7, 138, 253);
+    font-size: 44px;
+    font-weight:900; 
+    cursor: pointer;
+    border: 2px solid red;
+}
+
+.loginBlock a {
+    color:aliceblue;
+    text-decoration: none;
+}
+.loginBlock:hover{
+    text-shadow: 1px 1px 20px  rgb(126, 207, 218);
+}
