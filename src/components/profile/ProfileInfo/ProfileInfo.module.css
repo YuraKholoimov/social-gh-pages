@@ -16,3 +16,13 @@
   font-family:'Times New Roman', Times, serif ;
   
 }
+
+.avatar {
+  width: 100px;
+}
+
+.contactsContainer{
+  /* display: flex;
+  flex-direction: row; */
+  font-size: 22px;
+}

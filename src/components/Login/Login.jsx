@@ -12,26 +12,30 @@ import { required } from '../validator/validator'
 import s from './login.module.css'
 import style from '../common/formsControl.module.css'
 
+
+
 //-------------------------------- LOGIN FORM
 const LoginForm = ({handleSubmit, error}) => {
-    return <>
-        <div className={s.form__login} >
-            <form onSubmit={handleSubmit} >
-                <Field component={Input} placeholder={'email'} name={"email"} validate={[ required ]}/>
-                <Field component={Input} placeholder={"password"} name={"password"} type={"password"} validate={[required]} />
-                <Field component={Input} type={"checkbox"} name={"rememberMe"}/> remember me
-                {error && <div className={style.formError} >{error}</div>}
-                <button>Login</button>
-            </form>
+    return (
+        <div>
+            <div className={s.form__login} >
+                <form onSubmit={handleSubmit} >
+                    <Field component={Input} placeholder={'email'} name={"email"} validate={[ required ]}/>
+                    <Field component={Input} placeholder={"password"} name={"password"} type={"password"} validate={[required]} />
+                    <Field component={Input} type={"checkbox"} name={"rememberMe"}/> remember me
+                    {error && <div className={style.formError} >
+                            {error}
+                        </div>}
+                    <button>Login</button>
+                </form>
+            </div>
         </div>
-    </> 
+    ) 
 }
 //---------------------------------------REDUX FORM LOGIN 
- 
 const ReduxLoginForms = reduxForm({form:"login"})(LoginForm);
  
 //--------------------------------------- LOGIN COMPONENT
-
 const Login = (props) => {
 
     const onSubmit = (formData) => {
@@ -42,13 +46,17 @@ const Login = (props) => {
     if (props.isAuth) {
         return <Redirect to={"/Profile"} />
     }
-    return <>       
-        <div className={s.container__form__login}>  
-            <ReduxLoginForms onSubmit={onSubmit}/>
-        </div>
-    </> 
+    return  (
+        <div>       
+            <div className={s.container__form__login}>  
+                <ReduxLoginForms onSubmit={onSubmit}/>
+            </div>
+        </div> 
+    )
 }
+
 const mapStateToProps = (state) => ({
     isAuth: state.auth.isAuth
 })
+
 export default connect(mapStateToProps, { loginThunk })(Login)

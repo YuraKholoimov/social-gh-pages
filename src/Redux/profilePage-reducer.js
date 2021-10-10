@@ -1,9 +1,12 @@
+import { stopSubmit } from "redux-form"
 import usersApi, { profileAPI } from "../components/api/api"
 
 //--------------------------------------------   ACTION TYPES
 const ADD_POST = "ADD_POST"
 const SET_USER_PROFILE = "SET_USER_PROFILE"
 const SET_STATUS = "SET_STATUS"
+const SAVE_PHOTO_SUCCESS = "SAVE_PHOTO_SUCCESS"
+// const SAVE_PROFILE_SUCCESS = "SAVE_PROFILE_SUCCESS"
 //----------------------------------------------  STATE
 const initialState = {
     postData: [
@@ -22,10 +25,6 @@ const profilePageReducer = (state = initialState, action) => {
     switch (action.type) {
         case ADD_POST: {
             let newPost = {id: 6, message: action.newPost, like: 20}
-            // stateCopy.postData = [...state.postData]
-            // stateCopy.postData.unshift(newPost)
-            // stateCopy.inputText = ""
-            // return stateCopy
             return {...state,
                 postData: [newPost, ...state.postData]
             }
@@ -40,16 +39,26 @@ const profilePageReducer = (state = initialState, action) => {
                 status: action.status
             }
         }
+        case SAVE_PHOTO_SUCCESS:  {
+            return {...state, 
+                userProfile: {...state.userProfile, photos:action.photos}
+            }
+        }
+        // case SAVE_PROFILE_SUCCESS:  {
+        //     return {...state, 
+        //         userProfile:  action.profileData
+        //     }
+        // }
         default:
             return state
     }
 }
 //--------------------------------------------------- ACTION CREATORS
-
 const addPostActionCreator = (newPost) => ({type: ADD_POST, newPost})
 const setUserProfile = (userProfile) => ({type: SET_USER_PROFILE, userProfile})
 const setStatus = (status) => ({type: SET_STATUS, status})
-
+const savePhotoSuccess = (photos) => ({type: SAVE_PHOTO_SUCCESS, photos})
+// const saveProfileSuccess = (profileData) => ({type: SAVE_PROFILE_SUCCESS, profileData})
 //-------------------------------------------------- THUNK
 
 export const profileThunk = (userId) => async (dispatch) => {
@@ -71,8 +80,25 @@ export const updateStatusThunk = (status) => async (dispatch) => {
         
     if (response.data.resultCode === 0) {
         dispatch(setStatus(status))
+    }  
+}
+
+export const savePhotoThunk = (file) => async (dispatch) => {
+    let response = await profileAPI.savePhoto(file)
+    if (response.data.resultCode === 0) {
+        dispatch(savePhotoSuccess(response.data.data.photos))
     }
-    
+}
+
+export const saveProfileThunk = (profileData) => async (dispatch, getState) => {
+    const userId = getState().auth.userId
+    let response = await profileAPI.saveProfile(profileData)
+    if (response.data.resultCode === 0) {
+        dispatch(profileThunk(userId))
+    }  else {
+        dispatch(stopSubmit("edit-profile", {"contacts": {_error : response.data.messages[0]}}))
+        return Promise.reject(response.data.messages[0]);
+    }
 }
 
 export default profilePageReducer
