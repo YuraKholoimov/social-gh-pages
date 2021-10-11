@@ -1,5 +1,6 @@
 import React from 'react';
-import { HashRouter, Route } from 'react-router-dom'
+import { Redirect } from 'react-router';
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import { connect, Provider } from 'react-redux';
 
 import './App.css';
@@ -25,9 +26,7 @@ class App extends React.Component {
     this.props.initializApp()
   }
   render() {
-    if(!this.props.initialized) {
-      return <IsFetching />
-    }
+    {!this.props.initialized && <IsFetching /> }
       return (
       <div className="parallax">
         <div className="parallax__layer parallax__layer--back"></div>
@@ -36,12 +35,17 @@ class App extends React.Component {
             <HeaderContainer />
             <NavBar  />
             <div className="app-wrapper-content">
-              <Route path="/Profile/:userId?" render={ withSuspens(ProfileContainer)} />
-              <Route path="/Dialog" render={() => <DialogContainer  />} />
-              <Route path="/News" render={() => <News />} />
-              <Route path="/settings" render={() => <Settings />} /> 
-              <Route path="/Users" render={() => <UsersContainer />} />
-              <Route path="/Login" render={() => <Login />} />
+              <Switch>
+                <Route exact path="/" render={() => <Redirect to={'/profile'}  />} />
+                <Route path="/Profile/:userId?" render={ withSuspens(ProfileContainer)} />
+                <Route path="/Dialog" render={() => <DialogContainer  />} />
+                <Route path="/News" render={() => <News />} />
+                <Route path="/settings" render={() => <Settings />} /> 
+                <Route path="/Users" render={() => <UsersContainer />} />
+                <Route path="/Login" render={() => <Login />} />
+                <Route path="*" render={() => <div>Error 404</div>} />
+                
+              </Switch>
             </div>
         </div>
        </div>
@@ -56,11 +60,11 @@ const mapStateToProps = (state) => ({
  const AppContainer = connect(mapStateToProps, { initializApp })(App)
  
 const SamuraiJS = (props) => {
-  return <HashRouter>
+  return <BrowserRouter>
     <Provider store={store} >
       <AppContainer />
     </Provider>
-  </HashRouter>
+  </BrowserRouter>
 }
 
 export default SamuraiJS;

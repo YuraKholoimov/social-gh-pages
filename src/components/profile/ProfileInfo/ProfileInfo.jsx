@@ -23,7 +23,7 @@ const ProfileInfo = ({userProfile, status, updateStatusThunk, isOwner, savePhoto
   const onSubmit = (formData) => {
     saveProfileThunk(formData).then(
       () => {
-      setEditMode(false)
+      return setEditMode(false)
     })
     
 }

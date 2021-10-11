@@ -76,11 +76,16 @@ export const getStatusThunk = (userId) => async (dispatch) => {
 }
 
 export const updateStatusThunk = (status) => async (dispatch) => {
-    let response = await profileAPI.updateStatus(status)
+    
+    try {
+        let response = await profileAPI.updateStatus(status)
         
     if (response.data.resultCode === 0) {
         dispatch(setStatus(status))
-    }  
+    } 
+    } catch(error) {
+        console.log(error.message);
+    }
 }
 
 export const savePhotoThunk = (file) => async (dispatch) => {
